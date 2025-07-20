@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import type { EventInput } from './EventForm';
+import { toast } from 'react-toastify';
 
 interface EventWithId extends EventInput {
-  id: string; // Changed from _id to id
+  id: string; 
   archived?: boolean;
   category: string;
 }
@@ -17,8 +18,10 @@ const EventDisplay: React.FC<EventDisplayProps> = ({ events, setEvents }) => {
   const handleDelete = (id: string) => {
     axios
       .delete(`http://localhost:5000/events/${id}`)
-      .then(() => setEvents((prev) => prev.filter((e) => e.id !== id)))
-      .catch((err) => console.error('Delete failed:', err));
+      .then(() =>{ setEvents((prev) => prev.filter((e) => e.id !== id))
+    toast.success("Successfully deleted event")}
+  )
+      .catch((err) => toast.error('Delete failed:', err));
   };
 
   const toggleArchive = (id: string) => {
@@ -34,12 +37,17 @@ const EventDisplay: React.FC<EventDisplayProps> = ({ events, setEvents }) => {
           prev.map((e) => (e.id === id ? { ...e, archived: updated.archived } : e))
         );
       })
-      .catch((err) => console.error('Archive failed:', err));
+      .catch((err) => toast.error('Archive failed:', err));
   };
 
   return (
-    <div className="p-4 max-w-4xl mx-auto mt-10">
-      <h2 className="text-3xl font-bold text-center mb-6">Your Events</h2>
+  <div className="p-4 max-w-4xl mx-auto mt-10">
+   
+    {!events.length ? (
+      <h2 className="text-center text-gray-500 text-xl mt-10">
+        No events have been added in this category.
+      </h2>
+    ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {events.map((event) => (
           <div
@@ -73,8 +81,9 @@ const EventDisplay: React.FC<EventDisplayProps> = ({ events, setEvents }) => {
           </div>
         ))}
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
 };
 
 export default EventDisplay;

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
  @plugin "daisyui" {
   
@@ -9,4 +10,7 @@
   default: true;
   --color-primary: #7980ff;
   --color-secondary: teal;
+}
+body{
+  font-family: "Playfair Display", serif;
 }
