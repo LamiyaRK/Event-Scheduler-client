@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 
 interface EventWithId extends EventInput {
   id: string; 
-  archived?: boolean;
-  category: string;
+  archived: boolean;
+  category: 'Work' | 'Personal' | 'Other';
 }
 
 interface EventDisplayProps {
@@ -17,7 +17,7 @@ interface EventDisplayProps {
 const EventDisplay: React.FC<EventDisplayProps> = ({ events, setEvents }) => {
   const handleDelete = (id: string) => {
     axios
-      .delete(`http://localhost:5000/events/${id}`)
+      .delete(`https://event-handler-amber.vercel.app/events/${id}`)
       .then(() =>{ setEvents((prev) => prev.filter((e) => e.id !== id))
     toast.success("Successfully deleted event")}
   )
@@ -31,7 +31,7 @@ const EventDisplay: React.FC<EventDisplayProps> = ({ events, setEvents }) => {
     const updated = { ...eventToUpdate, archived: !eventToUpdate.archived };
 
     axios
-      .put(`http://localhost:5000/events/${id}`, updated)
+      .put(`https://event-handler-amber.vercel.app/events/${id}`, updated)
       .then(() => {
         setEvents((prev) =>
           prev.map((e) => (e.id === id ? { ...e, archived: updated.archived } : e))

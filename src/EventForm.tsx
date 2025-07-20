@@ -27,7 +27,7 @@ const EventForm: React.FC<EventFormProps> = ({ onAddEvent }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post<EventType>('http://localhost:5000/events', form);
+      const res = await axios.post<EventType>('https://event-handler-amber.vercel.app/events', form);
       onAddEvent(res.data);
       toast.success('Event added successfully')
       setForm({ title: '', date: '', time: '', notes: '' });

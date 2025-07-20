@@ -13,7 +13,7 @@ const App: React.FC = () => {
   
   const fetchEvents = () => {
     axios
-      .get<EventType[]>('http://localhost:5000/events')
+      .get<EventType[]>('https://event-handler-amber.vercel.app/events')
       .then((res) => {
         const sorted = [...res.data].sort((a, b) => {
           const aDateTime = new Date(`${a.date}T${a.time}`);
